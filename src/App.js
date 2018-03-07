@@ -7,7 +7,9 @@ import LoginForm from './components/LoginForm';
 class App extends Component {
   state = { loggedIn: null };
 
+
   componentWillMount(){
+
     firebase.initializeApp({
       apiKey: "AIzaSyB8yAxx0c4x1Kta2xuDQMNmdMwbfyWNa2I",
       authDomain: "auth-f08e7.firebaseapp.com",
@@ -18,7 +20,6 @@ class App extends Component {
     });
 
     firebase.auth().onAuthStateChanged((user) => {
-      console.log(user);
 
       if (user) {
         this.setState({ loggedIn: true })
@@ -31,11 +32,11 @@ class App extends Component {
   renderContent() {
     switch (this.state.loggedIn) {
       case true:
-        return <Button> Log Out </Button>;
+        return <Button onPress={() => firebase.auth().signOut()}> Log Out </Button>;
       case false:
         return <LoginForm />;
       default:
-        return <Spinner size="large"/>
+        return <Spinner size="large" />;
     }
   }
 
@@ -49,5 +50,28 @@ class App extends Component {
     );
   }
 }
+
+const styles = {
+  textStyle: {
+    alignSelf: 'center',
+    color: '#007aff',
+    fontSize: 16,
+    fontWeight: '600',
+    paddingTop: 10,
+    paddingBottom: 10
+  },
+  buttonStyle: {
+    flex: 1,
+    alignSelf: 'stretch',
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#007aff',
+    marginLeft: 5,
+    marginRight: 5
+  }
+};
+
+
 
 export default App;
